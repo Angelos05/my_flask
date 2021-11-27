@@ -25,6 +25,11 @@ def form():
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
     email =  request.form.get("email")
+    
+    if not first_name or not last_name or not email:
+        error_statement = "All Form Fields Required, Please Make Sure You Fill Out All The Boxes!"
+        return render_template("subscribe.html", error_statement=error_statement, first_name=first_name, last_name=last_name, email=email)
+
     subscribers.append(f"{first_name} {last_name} | {email}")
     title = "Thank you!"
     return render_template("form.html", title=title, subscribers=subscribers)
