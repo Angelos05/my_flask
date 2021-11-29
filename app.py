@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import smtplib
 
 app = Flask(__name__)
 
@@ -25,7 +26,15 @@ def form():
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
     email =  request.form.get("email")
-    
+
+    message = "You have been subscribed to my email newsletter"
+    server = smtplib.SMTP("smpt.gmail.com", 587)
+    server.starttls()
+    server.login("aggoup05@gmail.com", "PASSWORD") #this is where the password goes, leave it black for now
+    server.sendmail("aggoup05@gmail.com", email, message)
+
+
+
     if not first_name or not last_name or not email:
         error_statement = "All Form Fields Required, Please Make Sure You Fill Out All The Boxes!"
         return render_template("subscribe.html", error_statement=error_statement, first_name=first_name, last_name=last_name, email=email)
