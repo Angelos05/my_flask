@@ -27,11 +27,11 @@ def form():
     last_name = request.form.get("last_name")
     email =  request.form.get("email")
 
-    message = "You have been subscribed to my email newsletter"
-    server = smtplib.SMTP("smpt.gmail.com", 587)
-    server.starttls()
-    server.login("aggoup05@gmail.com", "PASSWORD") #this is where the password goes, leave it black for now
-    server.sendmail("aggoup05@gmail.com", email, message)
+    # message = "You have been subscribed to my email newsletter"
+    # server = smtplib.SMTP("smpt.gmail.com", 587)
+    # server.starttls()
+    # server.login("aggoup05@gmail.com", "PASSWORD") #this is where the password goes, leave it black for now
+    # server.sendmail("aggoup05@gmail.com", email, message)
 
 
 
