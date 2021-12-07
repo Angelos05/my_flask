@@ -1,9 +1,33 @@
 from flask import Flask, render_template, request
 import smtplib
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+
+
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///friends.db'
+
+# Initialize the database
+db = SQLAlchemy(app)
+
+# Create db model
+class Friends(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+# Create a function to return a string when we add something
+
+    def __repr__(self):
+        return '<Name &r>' % self.id
 
 subscribers =[]
+
+@app.route('/friends')
+def friends():
+    title = "My Friend List"
+    return render_template("friends.html", title=title)
 
 @app.route('/')
 def index():
