@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import smtplib
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+
+from werkzeug.utils import redirect
 
 
 
@@ -24,10 +26,50 @@ class Friends(db.Model):
 
 subscribers =[]
 
-@app.route('/friends')
+@app.route('/delete/<int:id>')
+def delete(id):
+    friend_to_delete = Friends.query.get_or_404(id)
+
+    try:
+        db.session.delete(friend_to_delete)
+        db.session.commit()
+        return redirect('/friends')
+    except:
+        return "There was a problem deleting that friend"
+
+
+@app.route('/update/<int:id>', methods=['POST', 'GET'])
+def update(id):
+    friend_to_update = Friends.query.get_or_404(id)
+    if request.method == "POST":
+        friend_to_update.name = request.form['name']
+        try:
+            db.session.commit()
+            return redirect('/friends')
+        except:
+            return "There was a problem updating your friend"
+    else:
+        return render_template('update.html', friend_to_update=friend_to_update )
+
+@app.route('/friends', methods=['POST', 'GET'])
 def friends():
     title = "My Friend List"
-    return render_template("friends.html", title=title)
+
+    if request.method == "POST":
+        friend_name = request.form['name']
+        new_friend = Friends(name=friend_name)
+
+        # Push to Database
+        try:
+            db.session.add(new_friend)
+            db.session.commit()
+            return redirect('/friends')
+        except:
+            return "There was an error adding your friend, please try again!"
+
+    else:
+        friends = Friends.query.order_by(Friends.date_created)
+        return render_template("friends.html", title=title, friends=friends)
 
 @app.route('/')
 def index():
