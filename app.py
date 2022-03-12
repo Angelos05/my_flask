@@ -14,15 +14,19 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///friends.db'
 db = SQLAlchemy(app)
 
 # Create db model
-class Friends(db.Model):
+class Videogames(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+    
 
 # Create a function to return a string when we add something
 
     def __repr__(self):
         return '<Name &r>' % self.id
+
+db.create_all()
+db.session.commit()
 
 subscribers =[]
 
