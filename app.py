@@ -37,9 +37,9 @@ def delete(id):
     try:
         db.session.delete(friend_to_delete)
         db.session.commit()
-        return redirect('/friends')
+        return redirect('/videogamepage')
     except:
-        return "There was a problem deleting that friend"
+        return "There was a problem deleting that video"
 
 
 @app.route('/update/<int:id>', methods=['POST', 'GET'])
@@ -49,9 +49,9 @@ def update(id):
         friend_to_update.name = request.form['name']
         try:
             db.session.commit()
-            return redirect('/friends')
+            return redirect('/videogamepage')
         except:
-            return "There was a problem updating your friend"
+            return "There was a problem updating your video"
     else:
         return render_template('update.html', friend_to_update=friend_to_update )
 
