@@ -32,7 +32,7 @@ subscribers =[]
 
 @app.route('/delete/<int:id>')
 def delete(id):
-    friend_to_delete = Friends.query.get_or_404(id)
+    friend_to_delete = Videogames.query.get_or_404(id)
 
     try:
         db.session.delete(friend_to_delete)
@@ -44,7 +44,7 @@ def delete(id):
 
 @app.route('/update/<int:id>', methods=['POST', 'GET'])
 def update(id):
-    friend_to_update = Friends.query.get_or_404(id)
+    friend_to_update = Videogames.query.get_or_404(id)
     if request.method == "POST":
         friend_to_update.name = request.form['name']
         try:
@@ -55,25 +55,26 @@ def update(id):
     else:
         return render_template('update.html', friend_to_update=friend_to_update )
 
-@app.route('/friends', methods=['POST', 'GET'])
-def friends():
+
+@app.route('/videogamepage', methods=['POST', 'GET'])
+def videogamepage():
     title = "My Friend List"
 
     if request.method == "POST":
         friend_name = request.form['name']
-        new_friend = Friends(name=friend_name)
+        new_friend = Videogames(name=friend_name)
 
         # Push to Database
         try:
             db.session.add(new_friend)
             db.session.commit()
-            return redirect('/friends')
+            return redirect('/videogamepage')
         except:
             return "There was an error adding your friend, please try again!"
 
     else:
-        friends = Friends.query.order_by(Friends.date_created)
-        return render_template("friends.html", title=title, friends=friends)
+        videogames = Videogames.query.order_by(Videogames.name)
+        return render_template("videogamepage.html", title=title, videogames=videogames)
 
 @app.route('/')
 def index():
