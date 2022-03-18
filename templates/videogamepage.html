@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<style>
+  table, th, td
+  {
+  border: 1px solid white;
+}
+
+</style>
+    <div class="container">
+       <h1>Videogames</h1>
+       <br/><form action="/videogamepage" METHOD="POST">
+        <input type="text" placeholder="Name" name="name">
+        <input type="submit" value="Add Name" class="btn btn-secondary">
+     </form>
+       <table>
+        <tr>
+          <th style="width: 100px; color: white;">Name</th>
+          <th style="width: 70px; color: white;">Update</th>
+          <th style="width: 60px; color: white;">Delete</th>
+        </tr>
+        <tr>
+          <br>
+        {% for videogame in videogames %}
+          <td><h4
+            style="color:white; width:100%">
+            {{ videogame.name }}</h4></td> 
+            <td><a href="/update/{{ videogame.id }}" class="btn btn-outline-secondary btn-sm">Update</a></td>
+            <td><a href="/delete/{{ videogame.id }}" class="btn btn-outline-danger btn-sm">Delete</a></td>  
+        </tr>
+        {% endfor %}
+        </tr>
+      </table>
+      <br/>
+        <br/><br/>
+    </div>
+
+{% endblock %}
+
+<!--08/01/2022 I cannot seem to be able to represent my data in a table-->

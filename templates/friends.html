@@ -1,25 +1,41 @@
 {% extends 'base.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
+<style>
+  table, th, td
+  {
+  border: 1px solid white;
+}
 
+</style>
     <div class="container">
        <h1>Friends</h1>
-       <br/>
-       <form action="/friends" METHOD="POST">
-           <input type="text" placeholder="Name" name="name">
-           <input type="submit" value="Add Name" class="btn btn-secondary">
-        </form>
-        <br/><br/>
+       <br/><form action="/friends" METHOD="POST">
+        <input type="text" placeholder="Name" name="name">
+        <input type="submit" value="Add Name" class="btn btn-secondary">
+     </form>
+       <table>
+        <tr>
+          <th style="width: 100px; color: white;">Name</th>
+          <th style="width: 70px; color: white;">Update</th>
+          <th style="width: 60px; color: white;">Delete</th>
+        </tr>
+        <tr>
+          <br>
         {% for friend in friends %}
-            <h4>
-                {{ friend.name }} <a href="/update/{{ friend.id }}" class="btn btn-outline-secondary btn-sm">Update</a>
-
-                <a href="/delete/{{ friend.id }}" class="btn btn-outline-danger btn-sm">Delete</a>
-
-            </h4>
+          <td><h4
+            style="color:white; width:100%">
+            {{ friend.name }}</h4></td> 
+            <td><a href="/update/{{ friend.id }}" class="btn btn-outline-secondary btn-sm">Update</a></td>
+            <td><a href="/delete/{{ friend.id }}" class="btn btn-outline-danger btn-sm">Delete</a></td>  
+        </tr>
         {% endfor %}
+        </tr>
+      </table>
+      <br/>
+        <br/><br/>
     </div>
 
 {% endblock %}
 
-<!-- !FIXED! Stuck on the 8th video, duration 14:30. Whenever I go to my website and click "Friends" there is just a white screen-->
+<!--08/01/2022 I cannot seem to be able to represent my data in a table-->
